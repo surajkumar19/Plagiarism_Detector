@@ -8,7 +8,7 @@ class fileread:
 		self.s=open(self.name).read()
 		k=''
 		for i in self.s:
-			if (ord(i)>64 and ord(i)<91) or (ord(i)>96 and ord(i)<123) or ord(i)==95 or ord(i)==32:
+			if (ord(i)>47 and ord(i)<58) or (ord(i)>96 and ord(i)<123) or ord(i)==95 or ord(i)==32:
 				k=k+i
 
 		self.ss=k.lower()
@@ -38,8 +38,11 @@ class bag:
 			if i in b:
 				z=a[i]*b[i]
 				vec_sum.append(z)
-		plag=sum(vec_sum)/(fileread.euclid_value[self.one]*fileread.euclid_value[two])
-		bag.l.append(self.one+' & '+two+' : '+str(round(plag,5)*100)+'%')
+		try:
+			plag=sum(vec_sum)/(fileread.euclid_value[self.one]*fileread.euclid_value[two])
+		except:
+			plag=0
+		bag.l.append(round(plag,5)*100)
 
 class long_same_substring:
 	l=[]
@@ -49,7 +52,7 @@ class long_same_substring:
 	    self.s1=open(self.one).read()
 	    k=''
 	    for i in self.s1:
-	    	if (ord(i)>64 and ord(i)<91) or (ord(i)>96 and ord(i)<123) or ord(i)==95 or ord(i)==32:
+	    	if (ord(i)>47 and ord(i)<58) or (ord(i)>96 and ord(i)<123) or ord(i)==95 or ord(i)==32:
 	    		k=k+i
 
 
@@ -57,7 +60,7 @@ class long_same_substring:
 	    s2=open(two).read()
 	    k=''
 	    for i in s2:
-	    	if (ord(i)>64 and ord(i)<91) or (ord(i)>96 and ord(i)<123) or ord(i)==95 or ord(i)==32:
+	    	if (ord(i)>47 and ord(i)<58) or (ord(i)>96 and ord(i)<123) or ord(i)==95 or ord(i)==32:
 	    		k=k+i
 
 	    self.ss=k.lower()
@@ -84,11 +87,38 @@ class long_same_substring:
 	    # 	length+=len(i)
 	    # print(lis)
 	    # print(length)
-	    plag_string=((len(max_string)*2)/(len1+len2))*100
+	    max_string=max_string.strip()
+	    # print(max_string,(len(max_string)*2),(len1+len2))
+	    try:
+	    	plag_string=((len(max_string)*2)/(len1+len2))*100
+	    except:
+	    	plag_string=0
 	    z=round(plag_string,3)
-	    long_same_substring.l.append(self.one+' & '+two+' : '+str(z)+'%')
+	    long_same_substring.l.append(z)
 
-    
+def print_matrix(n):
+	mat=[]
+	ty=[]
+	for i in n:
+		if len(ty)==len(files):
+			mat.append(ty)
+			ty=[i]
+		else:
+			ty.append(i)
+	mat.append(ty)
+	# print(mat)
+	print(' '*len(max(files)),'   ',end='')
+	for i in files:
+		print(i,'   ',end='')
+	print('')
+	nm=0
+	for j in files:
+		print(j,'  ',end='')
+		for k in mat[nm]:
+			print("{:10.2f}".format(k),'  ',end='')
+		print('')
+		nm+=1
+
 		
 
 
@@ -99,20 +129,40 @@ files=[p for p in listdir(path) if p.endswith('.txt')]
 for i in range(len(files)):
 	f1=fileread(files[i])
 	
-	for j in range(i+1,len(files)):
+	for j in range(len(files)):
 		f2=fileread(files[j])
 
 		bag(files[i],files[j])
 		long_same_substring(files[i],files[j])
 
+print_matrix(bag.l)
 
-for i in bag.l:
-	print(i)
 print('------------------------')
-for i in long_same_substring.l:
-	print(i)
-
-
+# for i in long_same_substring.l:
+# 	print(i)
+print_matrix(long_same_substring.l)
+	# mat=[]
+	# ty=[]
+	# # print(bag.l)
+	# for i in long_same_substring.l:
+	# 	if len(ty)==len(files):
+	# 		mat.append(ty)
+	# 		ty=[i]
+	# 	else:
+	# 		ty.append(i)
+	# mat.append(ty)
+	# # print(mat)
+	# print('             ',end='')
+	# for i in files:
+	# 	print(i,'   ',end='')
+	# print('')
+	# nm=0
+	# for j in files:
+	# 	print(j,'  ',end='')
+	# 	for k in mat[nm]:
+	# 		print("{:10.3f}".format(k),'  ',end='')
+	# 	print('')
+	# 	nm+=1
 
 
 
@@ -121,5 +171,5 @@ for i in long_same_substring.l:
 # file1=fileread('file1.txt')
 # file2=fileread('file2.txt')
 # print(file1.l)
-print(fileread.dictionary)
+# print(fileread.dictionary)
 # bag('file1.txt','file2.txt')
