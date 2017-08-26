@@ -1,5 +1,13 @@
 import math
 from os import listdir
+# def remove_special(s):
+# 	k=''
+# 	for i in s:
+# 		if (ord(i)>47 and ord(i)<58) or (ord(i)>96 and ord(i)<123) or ord(i)==95 or ord(i)==32:
+# 			k=k+i
+# 	return k
+
+
 class fileread:
 	dictionary={}
 	euclid_value={}
@@ -10,6 +18,7 @@ class fileread:
 		for i in self.s:
 			if (ord(i)>47 and ord(i)<58) or (ord(i)>96 and ord(i)<123) or ord(i)==95 or ord(i)==32:
 				k=k+i
+		# k=remove_special(self.s)[::]
 
 		self.ss=k.lower()
 		self.l=self.ss.split()
@@ -87,6 +96,7 @@ class long_same_substring:
 	    # 	length+=len(i)
 	    # print(lis)
 	    # print(length)
+	    # print(max_string)
 	    max_string=max_string.strip()
 	    # print(max_string,(len(max_string)*2),(len1+len2))
 	    try:
